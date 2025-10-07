@@ -22,10 +22,8 @@ public class TaskSwingUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout(10, 10));
 
-        // Inicializar componentes PRIMEIRO
         initializeComponents();
         
-        // Criar e adicionar painéis
         add(createInputPanel(), BorderLayout.NORTH);
         add(createListPanel(), BorderLayout.CENTER);
         add(createButtonPanel(), BorderLayout.SOUTH);
@@ -36,7 +34,6 @@ public class TaskSwingUI extends JFrame {
     }
 
     private void initializeComponents() {
-        // Inicializar todos os componentes antes de usá-los
         titleField = new JTextField(20);
         titleField.setName("titleField");
         
@@ -57,16 +54,13 @@ public class TaskSwingUI extends JFrame {
         JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5));
         panel.setBorder(BorderFactory.createTitledBorder("Nova Tarefa"));
 
-        // Título
         panel.add(new JLabel("Título: *"));
         panel.add(titleField);
 
-        // Descrição
         panel.add(new JLabel("Descrição:"));
         JScrollPane scrollPane = new JScrollPane(descriptionArea);
         panel.add(scrollPane);
 
-        // Prioridade
         panel.add(new JLabel("Prioridade:"));
         panel.add(priorityComboBox);
 
@@ -111,14 +105,12 @@ public class TaskSwingUI extends JFrame {
                 return;
             }
 
-            // Converter string para enum
             Tarefa.Prioridade prioridade = Tarefa.Prioridade.valueOf(prioridadeStr);
             
             Tarefa tarefa = taskManager.cadastrarTarefa(titulo, descricao, prioridade);
             listModel.addElement(tarefa.getId() + " - " + tarefa.getTitulo() + " - " + 
                                tarefa.getDescricao() + " (" + prioridadeStr + ") - " + tarefa.getStatus());
             
-            // Limpar campos
             titleField.setText("");
             descriptionArea.setText("");
             
@@ -140,9 +132,8 @@ public class TaskSwingUI extends JFrame {
         
         if (confirm == JOptionPane.YES_OPTION) {
             try {
-                // Obter o ID da tarefa a partir do texto da lista
                 String selectedValue = listModel.get(selectedIndex);
-                String taskId = selectedValue.split(" - ")[0]; // Assume que o ID é a primeira parte
+                String taskId = selectedValue.split(" - ")[0];
                 
                 taskManager.excluirTarefa(taskId);
                 listModel.remove(selectedIndex);

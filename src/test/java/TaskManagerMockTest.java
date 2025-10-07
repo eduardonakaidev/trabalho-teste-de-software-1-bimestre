@@ -58,13 +58,11 @@ class TaskManagerMockTest {
         assertEquals("1", tarefaEncontrada.get().getId());
         verify(repository, times(1)).findById("1");
 
-        // CORREÇÃO: Configurar o mock novamente para a próxima operação
         when(repository.findById("1")).thenReturn(Optional.of(tarefaMock));
         when(repository.salvar(any(Tarefa.class))).thenReturn(tarefaMock);
 
         taskManager.atualizarStatus("1", Tarefa.Status.CONCLUIDA);
 
-        // CORREÇÃO: Agora verificamos 2 chamadas totais (1 da busca + 1 da atualização)
         verify(repository, times(2)).findById("1");
         verify(repository, times(2)).salvar(any(Tarefa.class));
 
